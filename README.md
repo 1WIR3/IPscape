@@ -1,17 +1,13 @@
 # IPscape: Map the Internet's Landscape
-
 IPscape provides a comprehensive toolkit for **IP-to-ASN mapping** and **BGP analysis** needs. It helps you uncover the intricate relationships between IP addresses and Autonomous Systems (ASNs), visualize BGP routing paths, and explore the interconnected fabric of the global internet.
 
 ## Key Features
-
 ### Main Components
-
 * **IP-to-ASN Mapping:** Uses multiple reliable data sources including Team Cymru, ip-api.com, or ipinfo.io to accurately map IP addresses to their respective ASNs.
 * **ASN Information Retrieval:** Fetches detailed ASN holder information directly from RIPE NCC.
 * **BGP Neighbor Discovery:** Identifies and maps BGP connections between different ASNs.
 * **Visualization:** Generates insightful network graphs that visually represent complex BGP relationships.
 * **Export:** Allows you to save all results to a CSV file for further analysis or reporting.
-
 ---
 
 ## Getting Started
@@ -27,8 +23,11 @@ pip install requests networkx matplotlib ipaddress
 ### Usage
 
 Input your IP list: You can either modify the sample_ips list within the script or uncomment the file reading section to load IP addresses from a text file.
+
 Run the analysis: Execute the script, and it will automatically categorize all IPs by their associated ASNs.
+
 Get results: Upon completion, you'll receive a CSV file containing detailed mapping information and a visual BGP graph illustrating network relationships.
+
 Alternative Lightweight Approach
 If your primary focus is solely on fast ASN mapping and you prefer an offline solution, consider using the pyasn library:
 
@@ -347,3 +346,57 @@ rmdir /s ip-asn-env  # Windows
 4. **Consider integrating** results with other security tools or databases
 
 The tool is designed to handle interruptions gracefully - you can stop and restart the analysis as needed.
+---
+
+## Testing
+This repo includes a sample dataset generator that produces realistic IP address distributions for testing your ASN analysis tool. 
+
+Here's what it generates:
+
+## Key Features:
+
+**Realistic Distribution:**
+- **Major Cloud Providers**: Amazon AWS (300 IPs), Microsoft Azure (200 IPs), Google Cloud (150 IPs)
+- **CDN Networks**: Cloudflare (100 IPs), Akamai (80 IPs)
+- **ISPs**: Comcast (200 IPs), Verizon (150 IPs)
+- **Hosting Providers**: DigitalOcean (150 IPs), Linode (100 IPs)
+- **Social Media**: Facebook/Meta (50 IPs)
+- **Educational**: Universities and research institutions (50 IPs)
+- **Smaller ISPs**: Random international providers (460 IPs)
+
+**Multiple Output Formats:**
+1. **Plain text file** (`sample_ip_list.txt`) - One IP per line
+2. **CSV with metadata** (`sample_ip_dataset.csv`) - Includes service types, priorities, dates
+3. **Small test dataset** (`test_ip_list.txt`) - 100 IPs for quick testing
+
+## Usage Instructions:
+
+1. **Run the generator:**
+   ```bash
+   python sample_dataset_generator.py
+   ```
+
+2. **Files created:**
+   - `sample_ip_list.txt` - 2000 IPs for full analysis
+   - `test_ip_list.txt` - 100 IPs for quick testing
+   - `sample_ip_dataset.csv` - Enhanced format with metadata
+
+3. **Test with small dataset first:**
+   ```bash
+   # Modify your analyzer to use test file first
+   ip_list = load_ips_from_file('test_ip_list.txt')
+   ```
+
+## Expected ASN Results:
+
+When you run this through your ASN analyzer, you should see results like:
+- **AS15169** (Google): ~150 IPs
+- **AS16509** (Amazon): ~300 IPs  
+- **AS13335** (Cloudflare): ~100 IPs
+- **AS8075** (Microsoft): ~200 IPs
+- **AS7922** (Comcast): ~200 IPs
+- Plus dozens of smaller ASNs
+
+This dataset will give you a realistic test environment that mirrors real-world IP distributions you might encounter in network security analysis, demonstrating how your tool handles major cloud providers, ISPs, and various network types.
+
+The generator uses actual IP ranges from these organizations, so the ASN lookups will return genuine results, making it perfect for testing and demonstration purposes.
